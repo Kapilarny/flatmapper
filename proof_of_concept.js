@@ -27,8 +27,8 @@ console.log(
                 idx == 0 ? [2, 10] :
                 (idx == 1 ? 
                     ([
-                        (m) => (m[0][0][0] < 3 && (m[0][m[0][0][0]][2](m) ? (m[0][1][1](m)) : m[0][0][0]++)),
-                        (m) => m[0][1][0](m)
+                        (m) => (m[0][0][0] < 3 && (m[0][m[0][0][0]][2](m) ? (m[0][1][1](m)) : m[0][0][0]++)), // context run
+                        (m) => m[0][1][0](m) // Entry point
                     ]) : 
                 [
                     0, 
@@ -36,10 +36,14 @@ console.log(
                         (m) => console.log(m[0][0][1]), // log current value
                         (m) => m[0][0][1]--, // decrement
                     ],
-                    (m) => (((m[0][2][1][m[0][2][0]](m) && false) || ((m[0][2][0]++) && false) || ((m[0][2][0] == 2 ? (m[0][2][0] = 0) : 0)) && false) || true) && m[0][0][1] != 0,
+                    (m) => 
+                        (((m[0][2][1][m[0][2][0]](m) && false) // execute current step
+                        || ((m[0][2][0]++) && false) // increment step
+                        || ((m[0][2][0] == 2 ? (m[0][2][0] = 0) : 0)) && false) || true) // loop back if needed
+                        && m[0][0][1] != 0, // condition to continue loop
                 ])
             )
     )
-    .filter((e, idx, m) => e[1][1](m) || true)
+    .filter((e, idx, m) => e[1][1](m) || true) // run context switcher
     .map(e => 'done')[0] // extract final result (constant)
 )

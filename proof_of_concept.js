@@ -1,29 +1,7 @@
-// Let's have an example function
-// This function generates an array of 5 random numbers between 0-5
-const generate_random_array = () => {
-    const arr = [];
-
-    for(let i = 0; i < 5; i++) {
-        arr.push(Math.floor(Math.random() * 5+1));
-    }
-
-    return arr;
-}
-
-// Other way to write it is:
-// console.log(
-(new Array(1)).fill(undefined) // bootstrap our first map
-    .map(e => new Array(6).fill([]).fill(undefined, 1)) // Create the arr + 0-5 iteration points
-    .map(e => e.map((v, i, a) => i === 0 ? v : (a[0].push(Math.floor(Math.random() * 5+1)) && 0))) // Fill with random numbers
-    [0][0] // Extract the result
-// )
-
-
 const a_function_with_a_loop = () => {
-    let running = true;
     let i = 10;
 
-    while (running) {
+    while (i != 0) {
         console.log(i);
         i--;
     }
@@ -32,12 +10,36 @@ const a_function_with_a_loop = () => {
 }
 
 // Lets rewrite it
+
+// Boilerplate:
+// a[0] -> variable storage, a[0][0] reserved for program counter
+// a[1] -> context switcher functions
+// a[2] -> contexts list
+
+// Context:
+// c[0] -> context instr counter
+// c[1] -> context instructions
+// c[2] -> context step
 console.log(
-(new Array(1)).fill(undefined) // bootstrap our first map
-    .map(e => new Array(3).fill(undefined).map((_, i) => i == 0 ? true : i == 1 ? 10 : 
-    (a, b) => 
-        new Array(3).fill(undefined).map((_, j) => j == 0 ? () => a == 0 : j == 1 ? () => console.log(b) : () => b--))
-    .map((e, idx, a) => idx != 2 ? e : e(a[0], a[1]) ) // Populate the loop structure
-    [2][1]()
-    // .map((e) => idx != 2 ? e : e[2](e[0], e[1])
-))
+    new Array(1).fill(undefined).map(e =>
+        new Array(3).fill(undefined) // bootstrap our first map
+            .map((_, idx) => 
+                idx == 0 ? [2, 10] :
+                (idx == 1 ? 
+                    ([
+                        (m) => (m[0][0][0] < 3 && (m[0][m[0][0][0]][2](m) ? (m[0][1][1](m)) : m[0][0][0]++)),
+                        (m) => m[0][1][0](m)
+                    ]) : 
+                [
+                    0, 
+                    [
+                        (m) => console.log(m[0][0][1]), // log current value
+                        (m) => m[0][0][1]--, // decrement
+                    ],
+                    (m) => (((m[0][2][1][m[0][2][0]](m) && false) || ((m[0][2][0]++) && false) || ((m[0][2][0] == 2 ? (m[0][2][0] = 0) : 0)) && false) || true) && m[0][0][1] != 0,
+                ])
+            )
+    )
+    .filter((e, idx, m) => e[1][1](m) || true)
+    .map(e => 'done')[0] // extract final result (constant)
+)

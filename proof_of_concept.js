@@ -27,8 +27,7 @@ console.log(
                 idx == 0 ? [2, 10] :
                 (idx == 1 ? 
                     ([
-                        (m) => (m[0][0][0] < 3 && (m[0][m[0][0][0]][2](m) ? (m[0][1][1](m)) : m[0][0][0]++)), // context run
-                        (m) => m[0][1][0](m) // Entry point
+                        (m) => (m[0][0][0] < 3 && (m[0][m[0][0][0]][2](m) ? (m[0][1][0](m)) : m[0][0][0]++)), // context run
                     ]) : 
                 [
                     0, 
@@ -39,11 +38,10 @@ console.log(
                     (m) => 
                         (((m[0][2][1][m[0][2][0]](m) && false) // execute current step
                         || ((m[0][2][0]++) && false) // increment step
-                        || ((m[0][2][0] == 2 ? (m[0][2][0] = 0) : 0)) && false) || true) // loop back if needed
-                        && m[0][0][1] != 0, // condition to continue loop
+                        || ((m[0][2][0] == 2 ? (m[0][2][0] = 0) : 1) == 0 ? (m[0][0][1] != 0) : true))) // Loop back + check end
                 ])
             )
     )
-    .filter((e, idx, m) => e[1][1](m) || true) // run context switcher
+    .filter((e, idx, m) => e[1][0](m) || true) // run context switcher
     .map(e => 'done')[0] // extract final result (constant)
 )

@@ -115,7 +115,7 @@ trampoline(() => recursive_countdown(10)); // Works!
 
 // But why doesn't that overflow?
 // Well because all that setTimeout does, is it adds the arrow function to the next event cycle
-// So essentially we are doing a sort-of trampoline using js's built-in trampoline; timeouts events
+// So essentially we are doing a sort-of trampoline using js's built-in trampoline
 
 // But it's super slow :(
 // Slower than what you would expect, even with the overhead of waiting on the next event cycle
